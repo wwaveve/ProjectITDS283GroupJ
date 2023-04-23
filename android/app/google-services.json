@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "886580227128",
+    "project_id": "wongnok-f380d",
+    "storage_bucket": "wongnok-f380d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:886580227128:android:c8bbb19ff35a186d320acd",
+        "android_client_info": {
+          "package_name": "com.example.project_wongnok"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "886580227128-25ivfohdrjgtkg41i6875stbj0m82kpt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.project_wongnok",
+            "certificate_hash": "84a493133947d35fccbcc31a658322aae95639d1"
+          }
+        },
+        {
+          "client_id": "886580227128-vg7m4q1g37apvvdb3olgur09ideut59v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzwMFkEK4aAkFfkuKLDoioqH3kWCf-PM8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "886580227128-vg7m4q1g37apvvdb3olgur09ideut59v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
