@@ -1,55 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:project_wongnok/service/Api.dart';
 
 class FoodDetail extends StatelessWidget {
-  final String title;
-  final String backgroundImage;
+  final ApiCall apiCall;
 
-  const FoodDetail({
-    Key? key,
-    required this.title,
-    required this.backgroundImage,
-  }) : super(key: key);
+  const FoodDetail({Key? key, required this.apiCall}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(apiCall.nameFood),
         backgroundColor: Colors.grey,
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Image.network(
-              backgroundImage,
-              fit: BoxFit.cover,
-            ),
-          ),
+          Image.network(apiCall.imageFood),
+          SizedBox(height: 16.0),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  apiCall.nameFood,
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 24.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 8.0),
                 Text(
-                  'Description:',
+                  apiCall.descriptionRes,
                   style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
                   ),
                 ),
-                SizedBox(height: 8),
-                Text(
-                  'อยู่ระหว่างปรับปรุง',
-                  style: TextStyle(fontSize: 16),
-                ),
+                SizedBox(height: 16.0),
               ],
             ),
           ),

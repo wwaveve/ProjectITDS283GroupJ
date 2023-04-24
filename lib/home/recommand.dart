@@ -2,70 +2,80 @@ import 'package:flutter/material.dart';
 import 'package:project_wongnok/home/Food_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:project_wongnok/home/Food_detail.dart';
+import 'package:project_wongnok/service/Api.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class Recommand extends StatelessWidget {
-  Recommand({Key? key}) : super(key: key);
+class Recommand extends StatefulWidget {
+  @override
+  _Recommand createState() => _Recommand();
+}
 
-  final List<Map<String, String>> _foodList = [
-    {
-      'title': 'สเต็ก',
-      'image':
-          'https://iamafoodblog.b-cdn.net/wp-content/uploads/2021/02/how-to-cook-steak-1061w.jpg',
-      'Des': "ลุงหนวด"
-    },
-  ];
+class _Recommand extends State<Recommand> {
+  late Future<List<ApiCall>> _apiCalls;
+
+  @override
+  void initState() {
+    super.initState();
+    _apiCalls = _fetchApiCalls();
+  }
+
+  Future<List<ApiCall>> _fetchApiCalls() async {
+    final url = Uri.parse('https://my-api.marksirapop.repl.co/products');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final parsed = jsonDecode(response.body).cast<Map<String, dynamic>>();
+      return parsed.map<ApiCall>((json) => ApiCall.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load API data');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GridView.builder(
-        padding: EdgeInsets.all(8),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
-          childAspectRatio: 0.75,
-        ),
-        itemCount: _foodList.length,
-        itemBuilder: (BuildContext context, int index) {
-          final Map<String, String> food = _foodList[index];
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => FoodDetail(
-                    title: food['title']!,
-                    backgroundImage: food['image']!,
-                  ),
-                ),
+      body: Center(
+        child: FutureBuilder<List<ApiCall>>(
+          future: _apiCalls,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final apiCalls = snapshot.data!;
+              return ListView.builder(
+                itemCount: apiCalls.length,
+                itemBuilder: (context, index) {
+                  final apiCall = apiCalls[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FoodDetail(apiCall: apiCall),
+                        ),
+                      );
+                    },
+                    child: Card(
+                      child: Column(
+                        children: [
+                          Image.network(apiCall.imageFood),
+                          ListTile(
+                            title: Text(apiCall.nameFood),
+                            subtitle: Text(apiCall.nameRestaurant),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               );
-            },
-            child: Card(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: Image.network(
-                      food['image']!,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Text(
-                      food['title']!,
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
+            } else if (snapshot.hasError) {
+              return Text('${snapshot.error}');
+            } else {
+              return CircularProgressIndicator();
+            }
+          },
+        ),
       ),
     );
   }
-
-  static getFoods() {}
 }

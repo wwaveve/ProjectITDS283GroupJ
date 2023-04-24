@@ -5,7 +5,7 @@ class Savepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Scaffold(body: ListView(
       children: const <Widget>[
         Center(
           child: Text("Saved", style: TextStyle(fontSize: 25)),
@@ -62,6 +62,7 @@ class Savepage extends StatelessWidget {
           ),
         ),
       ],
+    )
     );
   }
 }

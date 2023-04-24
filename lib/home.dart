@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:project_wongnok/home/FoodBox.dart';
 import 'package:project_wongnok/home/recommand.dart';
-import 'home/FoodBox.dart';
+import 'package:project_wongnok/social/post.dart';
 import 'save.dart';
 import 'search_page.dart';
+import 'package:project_wongnok/service/auth_service.dart';
 
 class MyStatefulWidget extends StatefulWidget {
   const MyStatefulWidget({super.key});
@@ -17,11 +17,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
-    Food(),
+    PostPage(
+      posts: [],
+    ),
     Recommand(),
     Savepage(),
-    Search(),
+    SearchPage(),
   ];
+  
 
   void _onItemTapped(int index) {
     setState(() {
